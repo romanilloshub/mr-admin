@@ -34,6 +34,11 @@ export class CrudBuilder {
   };
 
   constructor(constructorObj) {
+    // console.log(constructorObj);
+    // if (!constructorObj.update) {
+    //   delete this.update;
+    // }
+
     Object.assign(this, constructorObj);
   }
 }
