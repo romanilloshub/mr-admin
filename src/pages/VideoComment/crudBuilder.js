@@ -26,9 +26,16 @@ const find = async ({ page, limit }) => {
 
   const allComments = allCommentsFlat.map((comment) => ({
     ...comment,
-    videoTitle: videos.data.find((video) => video.id === comment.entity_id)
-      .title,
+    videoTitle:
+      videos.data.find((video) => video.id === comment.entity_id)?.title ||
+      "__SIN VIDEO",
   }));
+
+  const uniqueIds = [...new Set(allComments.map((comment) => comment.id))];
+
+  const allCommentsUnique = uniqueIds.map((id) => allComments.id === id);
+
+  allCommentsUnique.sort((a, b) => (a.videoTitle > b.videoTitle ? 1 : -1));
   //   const comments = await CommentService.getComments();
 
   return {
