@@ -10,7 +10,14 @@ const overrideProcessEnv = (value) => (config) => {
   return config;
 };
 
-module.exports = override(
+module.exports = {
+  paths: function (paths) {
+    if (process.env.BUILD_PATH) {
+      paths.appBuild = path.resolve(process.env.BUILD_PATH);
+    }
+    return paths;
+  },
+  webpack: override(
   addLessLoader({
     lessLoaderOptions: {
       lessOptions: {
@@ -27,4 +34,5 @@ module.exports = override(
   overrideProcessEnv({
     VERSION: JSON.stringify(require("./package.json").version),
   })
-);
+),
+};
